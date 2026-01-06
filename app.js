@@ -1,7 +1,22 @@
-const _ = require("lodash");
+const { readFile, writeFile } = require("fs/promises");
 
-const items = [1, [2, [3, [4]]]];
-const newItems = _.flattenDeep(items);
+const start = async () => {
+  try {
+    // const first = await readFile("./content/first.txt", "utf-8");
+    // const second = await readFile("./content/second.txt", "utf-8");
 
-console.log(newItems);
-console.log("Hello");
+    const [first, second] = await Promise.all([
+      readFile("./content/first.txt", "utf-8"),
+      readFile("./content/second.txt", "utf-8"),
+    ]);
+
+    await writeFile(
+      "./content/third.txt",
+      `This is awesome blyattttch: ${first}, ${second}`
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
